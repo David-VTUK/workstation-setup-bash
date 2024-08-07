@@ -4,7 +4,6 @@
 
 # List of layered rpm-ostree packages to remove
 declare -a rpm_ostree_packages_remove=(
-    "gnome-software" 
     "gnome-software-rpm-ostree" 
     "firefox"
     "firefox-langpacks"
@@ -26,8 +25,7 @@ declare -a flatpak_packages_install=(
     "com.discordapp.Discord"
     "com.getpostman.Postman"
     "com.mattjakeman.ExtensionManager"
-    "org.gnome.Extensions"
-    "com.slack.Slack"
+     "com.slack.Slack"
     "com.spotify.Client"
     "com.visualstudio.code"
     "md.obsidian.Obsidian"
@@ -42,11 +40,11 @@ declare -a flatpak_packages_install=(
 
 # Remove Layered Packages
 echo "Removing Layered Packages"
-rpm-ostree uninstall "${rpm_ostree_packages_remove[@]}"
+sudo rpm-ostree uninstall "${rpm_ostree_packages_remove[@]}"
 
 # Install Layered Packages
 echo "Installing Layered Packages"
-rpm-ostree install "${rpm_ostree_packages_install[@]}"
+sudo rpm-ostree install "${rpm_ostree_packages_install[@]}"
 
 # Remove Flatpak Packages
 echo "Removing Flatpak Packages"
@@ -68,7 +66,8 @@ vscode_runtime=$(flatpak info com.visualstudio.code --show-runtime | awk -F '/' 
 
 # Install the necessary Flatpak Runtimes
 echo "Installing Flatpak Runtimes"
-flatpak install flathub org.freedesktop.Platform.ffmpeg-full/"$flatpak_runtime" runtime/com.visualstudio.code.tool.podman/x86_64/"$vscode_runtime" -y
+flatpak install flathub org.freedesktop.Platform.ffmpeg-full/"$flatpak_runtime" -y
+#runtime/com.visualstudio.code.tool.podman/x86_64/"$vscode_runtime" -y
 
 # Set GNOME settings
 echo "Setting GNOME Settings"
@@ -77,3 +76,5 @@ gsettings set org.gnome.desktop.interface gtk-theme Adwaita
 gsettings set org.gnome.desktop.interface icon-theme Papirus
 gsettings set org.gnome.desktop.interface cursor-theme Adwaita
 gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close"
+
+sudo rpm-ostree upgrade -y
