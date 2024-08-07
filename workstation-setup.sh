@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # This script is used to setup a workstation with the necessary tools and packages
 
