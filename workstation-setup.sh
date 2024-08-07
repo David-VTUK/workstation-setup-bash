@@ -3,7 +3,7 @@
 # This script is used to setup a workstation with the necessary tools and packages
 
 # List of layered rpm-ostree packages to remove
-declare -a rpm-ostree-packages-remove=(
+declare -a rpm_ostree_packages_remove=(
     "gnome-software" 
     "gnome-software-rpm-ostree" 
     "firefox"
