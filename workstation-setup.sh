@@ -3,26 +3,26 @@
 # This script is used to setup a workstation with the necessary tools and packages
 
 # List of layered rpm-ostree packages to remove
-rpm-ostree-packages-remove=(
+declare -a rpm-ostree-packages-remove=(
     "gnome-software" 
     "gnome-software-rpm-ostree" 
     "firefox"
     "firefox-langpacks"
 )
 
-rpm-ostree-packages-install=(
+declare -a rpm-ostree-packages-install=(
     "gnome-tweaks"
     "gnome-themes-extra"
     "papirus-icon-theme"
 )
 
-flatpak-packages-remove=(
+declare -a flatpak-packages-remove=(
     "org.gnome.Calendar"
     "org.gnome.Maps"
     "org.gnome.Weather"
 )
 
-flatpak-packages-install=(
+declare -a flatpak-packages-install=(
     "com.discordapp.Discord"
     "com.getpostman.Postman"
     "com.mattjakeman.ExtensionManager"
