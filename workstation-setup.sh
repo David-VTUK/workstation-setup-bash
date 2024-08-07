@@ -10,19 +10,19 @@ declare -a rpm_ostree_packages_remove=(
     "firefox-langpacks"
 )
 
-declare -a rpm-ostree-packages-install=(
+declare -a rpm_ostree_packages_install=(
     "gnome-tweaks"
     "gnome-themes-extra"
     "papirus-icon-theme"
 )
 
-declare -a flatpak-packages-remove=(
+declare -a flatpak_packages_remove=(
     "org.gnome.Calendar"
     "org.gnome.Maps"
     "org.gnome.Weather"
 )
 
-declare -a flatpak-packages-install=(
+declare -a flatpak_packages_install=(
     "com.discordapp.Discord"
     "com.getpostman.Postman"
     "com.mattjakeman.ExtensionManager"
@@ -42,15 +42,15 @@ declare -a flatpak-packages-install=(
 
 # Remove Layered Packages
 echo "Removing Layered Packages"
-rpm-ostree uninstall "${rpm-ostree-packages-remove[@]}"
+rpm-ostree uninstall "${rpm_ostree_packages_remove[@]}"
 
 # Install Layered Packages
 echo "Installing Layered Packages"
-rpm-ostree install "${rpm-ostree-packages-install[@]}"
+rpm-ostree install "${rpm_ostree_packages_install[@]}"
 
 # Remove Flatpak Packages
 echo "Removing Flatpak Packages"
-flatpak uninstall "${flatpak-packages-remove[@]}" -y
+flatpak uninstall "${flatpak_packages_remove[@]}" -y
 
 # Add Flathub Repo
 echo "Adding Flathub Repo"
@@ -58,7 +58,7 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 
 # Install Flatpak Packages
 echo "Installing Flatpak Packages"
-flatpak install flathub "${flatpak-packages-install[@]}" -y
+flatpak install flathub "${flatpak_packages_install[@]}" -y
 
 # Extract the flatpak runtime version so that we can install the correct VAAPI
 flatpak_runtime=$(flatpak info org.mozilla.firefox --show-runtime | awk -F '/' '{print $NF}')
