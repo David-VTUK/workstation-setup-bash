@@ -25,7 +25,7 @@ declare -a flatpak_packages_install=(
     "com.discordapp.Discord"
     "com.getpostman.Postman"
     "com.mattjakeman.ExtensionManager"
-     "com.slack.Slack"
+    "com.slack.Slack"
     "com.spotify.Client"
     "com.visualstudio.code"
     "md.obsidian.Obsidian"
@@ -37,6 +37,10 @@ declare -a flatpak_packages_install=(
     "com.obsproject.Studio"
     "org.mozilla.firefox"
 )
+
+# Add Flathub Repo
+echo "Adding Flathub Repo"
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 # Remove Layered Packages
 echo "Removing Layered Packages"
@@ -50,10 +54,6 @@ sudo rpm-ostree install "${rpm_ostree_packages_install[@]}"
 echo "Removing Flatpak Packages"
 flatpak uninstall "${flatpak_packages_remove[@]}" -y
 
-# Add Flathub Repo
-echo "Adding Flathub Repo"
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
 # Install Flatpak Packages
 echo "Installing Flatpak Packages"
 flatpak install flathub "${flatpak_packages_install[@]}" -y
@@ -66,8 +66,8 @@ vscode_runtime=$(flatpak info com.visualstudio.code --show-runtime | awk -F '/' 
 
 # Install the necessary Flatpak Runtimes
 echo "Installing Flatpak Runtimes"
-flatpak install flathub org.freedesktop.Platform.ffmpeg-full/"$flatpak_runtime" -y
-#runtime/com.visualstudio.code.tool.podman/x86_64/"$vscode_runtime" -y
+flatpak install flathub runtime/org.freedesktop.Platform.ffmpeg-full/x86_64/"$flatpak_runtime" -y
+flatpak install flathub runtime/com.visualstudio.code.tool.podman/x86_64/"$vscode_runtime" -y
 
 # Set GNOME settings
 echo "Setting GNOME Settings"
