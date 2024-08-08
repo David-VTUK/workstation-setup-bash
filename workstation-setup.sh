@@ -4,7 +4,8 @@
 
 # List of layered rpm-ostree packages to remove
 declare -a rpm_ostree_packages_remove=(
-    "gnome-software-rpm-ostree" 
+    "gnome-software-rpm-ostree"
+    "gnome-software" 
     "firefox"
     "firefox-langpacks"
 )
