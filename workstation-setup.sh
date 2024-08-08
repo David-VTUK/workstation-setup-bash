@@ -5,7 +5,7 @@
 # List of layered rpm-ostree packages to remove
 declare -a rpm_ostree_packages_remove=(
     "gnome-software-rpm-ostree"
-    "gnome-software" 
+    "gnome-software"
     "firefox"
     "firefox-langpacks"
 )
@@ -14,6 +14,7 @@ declare -a rpm_ostree_packages_install=(
     "gnome-tweaks"
     "gnome-themes-extra"
     "papirus-icon-theme"
+    "libva-utils"
 )
 
 declare -a flatpak_packages_remove=(
@@ -37,6 +38,7 @@ declare -a flatpak_packages_install=(
     "org.wireshark.Wireshark"
     "com.obsproject.Studio"
     "org.mozilla.firefox"
+    "com.github.tchx84.Flatseal"
 )
 
 # Add Flathub Repo
@@ -45,11 +47,11 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 
 # Remove Layered Packages
 echo "Removing Layered Packages"
-sudo rpm-ostree uninstall "${rpm_ostree_packages_remove[@]}"
+sudo rpm-ostree override remove "${rpm_ostree_packages_remove[@]}"
 
 # Install Layered Packages
 echo "Installing Layered Packages"
-sudo rpm-ostree install "${rpm_ostree_packages_install[@]}"
+rpm-ostree install "${rpm_ostree_packages_install[@]}"
 
 # Remove Flatpak Packages
 echo "Removing Flatpak Packages"
@@ -59,10 +61,10 @@ flatpak uninstall "${flatpak_packages_remove[@]}" -y
 echo "Installing Flatpak Packages"
 flatpak install flathub "${flatpak_packages_install[@]}" -y
 
-# Extract the flatpak runtime version so that we can install the correct VAAPI
+# Extract the Firefox runtime version so that we can install the correct FFmpeg runtime (to match)
 flatpak_runtime=$(flatpak info org.mozilla.firefox --show-runtime | awk -F '/' '{print $NF}')
 
-# Extract the flatpak runtime version so that we can install the correct Remote Podman version
+# Extract the VSCode runtime version so that we can install the correct Remote Podman runtime (to match)
 vscode_runtime=$(flatpak info com.visualstudio.code --show-runtime | awk -F '/' '{print $NF}')
 
 # Install the necessary Flatpak Runtimes
@@ -78,4 +80,8 @@ gsettings set org.gnome.desktop.interface icon-theme Papirus
 gsettings set org.gnome.desktop.interface cursor-theme Adwaita
 gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close"
 
-sudo rpm-ostree upgrade -y
+# Set Update OS
+sudo rpm-ostree upgrade
+
+# Reboot
+systemctl reboot
