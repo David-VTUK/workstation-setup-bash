@@ -71,5 +71,8 @@ sudo rpm-ostree upgrade
 # Enable podman socket for vscode
 systemctl --user enable podman.socket
 
+# Enable vscode to access podman
+flatpak override --user --filesystem=xdg-run/podman com.visualstudio.com
+
 # Reboot
 systemctl reboot
