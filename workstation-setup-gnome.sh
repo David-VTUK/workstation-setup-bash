@@ -72,6 +72,9 @@ echo "Installing Flatpak Runtimes"
 flatpak install flathub runtime/org.freedesktop.Platform.ffmpeg-full/x86_64/"$flatpak_runtime" -y
 flatpak install flathub runtime/com.visualstudio.code.tool.podman/x86_64/"$vscode_runtime" -y
 
+# Enable podman socket for vscode
+systemctl --user enable podman.socket
+
 # Set GNOME settings
 echo "Setting GNOME Settings"
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
