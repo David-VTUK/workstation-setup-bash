@@ -68,5 +68,8 @@ flatpak install flathub runtime/com.visualstudio.code.tool.podman/x86_64/"$vscod
 # Set Update OS
 sudo rpm-ostree upgrade
 
+# Enable podman socket for vscode
+systemctl --user enable podman.socket
+
 # Reboot
 systemctl reboot
