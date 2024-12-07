@@ -75,6 +75,9 @@ flatpak install flathub runtime/com.visualstudio.code.tool.podman/x86_64/"$vscod
 # Enable podman socket for vscode
 systemctl --user enable podman.socket
 
+# Enable vscode to access podman
+flatpak override --user --filesystem=xdg-run/podman com.visualstudio.com
+
 # Set GNOME settings
 echo "Setting GNOME Settings"
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
