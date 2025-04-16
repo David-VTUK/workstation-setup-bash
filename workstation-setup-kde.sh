@@ -15,7 +15,6 @@ declare -a rpm_ostree_packages_install=(
     "jetbrains-mono-fonts-all"
     "papirus-icon-theme"
     "zsh"
-    
 )
 
 declare -a flatpak_packages_remove=(
