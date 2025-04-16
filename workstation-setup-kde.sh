@@ -11,6 +11,11 @@ declare -a rpm_ostree_packages_remove=(
 declare -a rpm_ostree_packages_install=(
     "papirus-icon-theme"
     "libva-utils"
+    "intel-gpu-tools"
+    "jetbrains-mono-fonts-all"
+    "papirus-icon-theme"
+    "zsh"
+    
 )
 
 declare -a flatpak_packages_remove=(
@@ -32,6 +37,7 @@ declare -a flatpak_packages_install=(
     "com.obsproject.Studio"
     "org.mozilla.firefox"
     "com.github.tchx84.Flatseal"
+    "md.obsidian.Obsidian"
 )
 
 # Add Flathub Repo
