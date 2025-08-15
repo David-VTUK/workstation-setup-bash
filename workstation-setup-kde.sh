@@ -11,6 +11,7 @@ declare -a rpm_ostree_packages_remove=(
 declare -a rpm_ostree_packages_install=(
     "papirus-icon-theme"
     "libva-utils"
+    "lsd"
     "intel-gpu-tools"
     "jetbrains-mono-fonts-all"
     "papirus-icon-theme"
