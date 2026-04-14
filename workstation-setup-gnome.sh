@@ -86,6 +86,53 @@ gsettings set org.gnome.desktop.interface icon-theme Papirus
 gsettings set org.gnome.desktop.interface cursor-theme Adwaita
 gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close"
 
+#!/bin/bash
+set -e
+
+# for EBPF Development
+echo "==========================================================="
+echo " Configuring Host Systemd (Rootful Podman Socket)"
+echo "==========================================================="
+echo "This step requires sudo to create the systemd override file."
+
+# 1. Create the systemd drop-in directory
+sudo mkdir -p /etc/systemd/system/podman.socket.d
+
+# 2. Write the override configuration to allow wheel group and directory traversal
+echo "[Socket]
+SocketGroup=wheel
+SocketMode=0660
+DirectoryMode=0755" | sudo tee /etc/systemd/system/podman.socket.d/override.conf > /dev/null
+
+# 3. Reload systemd and restart the socket
+sudo systemctl daemon-reload
+sudo systemctl enable --now podman.socket
+sudo systemctl restart podman.socket
+
+echo "✔ Systemd configured. Socket is running at /run/podman/podman.sock"
+echo ""
+
+echo "==========================================================="
+echo " Configuring VS Code Flatpak Sandboxing"
+echo "==========================================================="
+
+# 4. Punch the filesystem hole for the /run/podman directory
+flatpak override --user --filesystem=/run/podman com.visualstudio.code
+
+# 5. Set the necessary environment variables for the Flatpak podman tool
+flatpak override --user --env=DOCKER_HOST=unix:///run/podman/podman.sock com.visualstudio.code
+flatpak override --user --env=CONTAINER_HOST=unix:///run/podman/podman.sock com.visualstudio.code
+
+# 6. Force kill any lingering VS Code sandbox processes to ensure overrides apply
+echo "Shutting down any background VS Code Flatpak instances..."
+flatpak kill com.visualstudio.code || true
+
+echo "✔ Flatpak overrides applied."
+echo ""
+echo "==========================================================="
+echo " Setup Complete!"
+echo "==========================================================="
+
 # Set Update OS
 sudo rpm-ostree upgrade
 
