@@ -15,6 +15,11 @@ declare -a rpm_ostree_packages_install=(
     "gnome-themes-extra"
     "papirus-icon-theme"
     "libva-utils"
+    "jetbrains-mono-fonts-all"
+    "lsd"
+    "papirus-icon-theme"
+    "radeontop"
+    "zsh"
 )
 
 declare -a flatpak_packages_remove=(
